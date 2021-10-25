@@ -46,6 +46,14 @@
     overflow: hidden;
 }
 
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    grid-gap: 5px;
+    background-color: white;
+}
+
 
 /*---------------------- Header --------------------------*/
 .logo-container img {
@@ -129,8 +137,8 @@ h2 {
     width: 27vw;
 }
 
-.maxi-featured-img {
-    width: 45vw;
+.product-img {
+    width: 10vw;
     padding: 7px;
 }
 
