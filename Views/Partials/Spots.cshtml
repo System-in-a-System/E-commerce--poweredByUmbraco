@@ -1,30 +1,21 @@
 ﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
 
+@{ 
+    var spotsContentEnumerable = Model.Value<IEnumerable<IPublishedElement>>("spots");
+}
+
 <div class="h-container">
-    <div class="v-container">
-        <a href="/">
-            <img class="mini-featured-img"
-                 src="https://ae01.alicdn.com/kf/HTB10akFeTJYBeNjy1zeq6yhzVXaW/Women-s-off-shoulder-leisure-tops-fashion-floral-print-2018-summer-chiffon-blouse-long-flare-sleeve.jpg"
-                 alt="featured product" />
-        </a>
-        <h2>Lorem ipsum dolor</h2>
-    </div>
+    @foreach (var spotsContent in spotsContentEnumerable)
+    {
+        var imageUrl = spotsContent.Value<IPublishedContent>("spotImage").Url();
 
-    <div class="v-container">
-        <a href="/">
-            <img class="mini-featured-img"
-                 src="https://go3.imgsmail.ru/imgpreview?key=70849b8d1f4d3272&mb=storage"
-                 alt="featured product" />
-        </a>
-        <h2>Lorem ipsum dolor</h2>
-    </div>
-
-    <div class="v-container">
-        <a href="/">
-            <img class="mini-featured-img"
-                 src="https://i.pinimg.com/originals/56/cf/2e/56cf2e5128ec5ea35cea8d4b4ef1ed37.jpg"
-                 alt="featured product" />
-        </a>
-        <h2>Lorem ipsum dolor</h2>
-    </div>
+        <div class="v-container">
+            <a href="@spotsContent.Value("spotLink")">
+                <img class="mini-featured-img"
+                     src="@imageUrl"
+                     alt="featured product" />
+            </a>
+            <h2>@spotsContent.Value("spotHeading")</h2>
+        </div>
+    }
 </div>
