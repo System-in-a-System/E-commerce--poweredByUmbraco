@@ -1,0 +1,47 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.SearchPage>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Cms.Core;
+
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@inject IPublishedContentQuery _publishedContentQuery
+
+@{
+	Layout = "Master.cshtml";
+}
+
+@{
+    var searchQuery = HttpContextAccessor.HttpContext.Request.Query["q"];
+}
+
+<div class="search-results">
+
+    @{ 
+        var searchResults = _publishedContentQuery.Search(searchQuery);
+    }
+
+    <div class="search-results-count">@searchResults.Count() träffar på @searchQuery</div>
+
+
+    @foreach (var result in searchResults)
+    {
+        var image = result.Content.Value<IPublishedContent>("productImage");
+        var imageUrl = image != null ? image.Url() : "https://vectorportal.com/storage/tshirt9_7655.jpg";
+
+        <a href="@result.Content.Url()">
+            <div class="h-container search-result-container">
+                <img src="@imageUrl"/>
+                <div class="v-container justify-between">
+                    <div>
+                        <h3>@result.Content.Name</h3>
+                        <p>@result.Content.Value("productDescription")</p>
+                    </div>
+                    <div>
+                        <p>@result.Content.Value("productPrice") SEK</p>
+                    </div>
+                </div>
+            </div>
+        </a>
+    }
+</div>
+
