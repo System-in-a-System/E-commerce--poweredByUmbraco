@@ -2,5 +2,23 @@
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.ProductDetailsPage>
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
 @{
-	Layout = "Master.cshtml";
+    Layout = "Master.cshtml";
 }
+
+@{
+    var image = Model.Value<IPublishedContent>("productImage");
+    var imageUrl = image != null ? image.Url() : "https://img4.goodfon.ru/original/3200x1800/a/81/natali-portman-natalie-portman-aktrisa-model-briunetka-kraso.jpg";
+}
+
+
+<div class="h-container" style="padding-top: 20px; padding-bottom: 30px; justify-content:center; align-items:flex-start">
+    <div class="product-details-img-container">
+        <img class="product-img" src="@imageUrl" />
+    </div>
+    <div class="v-container product-details-container">
+        <h1>@Model.Value("productHeading")</h1>
+        <p>@Model.Value("productDescription")</p>
+        <p>@Model.Value("productPrice") SEK</p>
+        <button>Lägg i varukorgen</button>
+    </div>
+</div>
