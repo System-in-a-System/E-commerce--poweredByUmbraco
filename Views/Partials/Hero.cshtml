@@ -1,22 +1,37 @@
-﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Cms.Core.Models
 
-    <div class="h-container hero">
-        <div class="v-container intro">
-            <h1>@Model.Value("heroHeading")</h1>
-            <p>
-                @Model.Value("heroMessage")
-            </p>
-            <a href="@Model.Value("heroLink")">
-                <button>
-                    Click me!
-                </button>
-            </a>
-        </div>
 
-        @{ 
-            var image = Model.Value<IPublishedContent>("heroImage");
-            var imageUrl = image != null ? image.Url() : "https://img4.goodfon.ru/original/3200x1800/a/81/natali-portman-natalie-portman-aktrisa-model-briunetka-kraso.jpg";
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+
+<div class="h-container hero">
+    <div class="v-container intro">
+        <h1>@Model.Value("heroHeading")</h1>
+        <p>
+            @Model.Value("heroMessage")
+        </p>
+        @{
+            var links = Model.Root().Value<IEnumerable<Link>>("heroLink");
+            if (links.Any())
+            {
+
+                @foreach (var link in links)
+                {
+                    <a href="@link.Url" target="@link.Target">
+                        <button>
+                            @link.Name
+                        </button>
+                    </a>
+                }
+
+            }
         }
-
-        <img src="@imageUrl" alt="hero-img-frekyfashion" />
     </div>
+
+    @{
+        var image = Model.Value<IPublishedContent>("heroImage");
+        var imageUrl = image != null ? image.Url() : "https://img4.goodfon.ru/original/3200x1800/a/81/natali-portman-natalie-portman-aktrisa-model-briunetka-kraso.jpg";
+    }
+
+    <img src="@imageUrl" alt="hero-img-frekyfashion" />
+</div>
