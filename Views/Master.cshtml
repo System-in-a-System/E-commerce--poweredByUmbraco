@@ -1,4 +1,5 @@
 ﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Forms.Web;
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
 @{
 	Layout = null;
@@ -15,6 +16,7 @@
     <title>@Model.Value("pageMetaTitle")</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
     <link rel="stylesheet" href="~/css/styles.css"/>
+    @Html.RenderUmbracoFormDependencies();
   </head>
 
 
