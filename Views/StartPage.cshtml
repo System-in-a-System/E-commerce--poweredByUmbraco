@@ -18,29 +18,32 @@
     var content = Model.Value<IPublishedContent>("popularProductsProducts");
 }
 
-<h2 style="background-color:white; text-align:center;">@Model.Value("popularProductsHeading")</h2>
+<div class="popular-products-section">
+    <h1>@Model.Value("popularProductsHeading")</h1>
 
-<div class="grid-container"> 
-    @foreach (var product in content.Children)
-     {
-        var productName = product.Name;
-        var image = product.Value<IPublishedContent>("productImage");
-        var imageUrl = image != null ? image.Url() : "https://www.pngpix.com/wp-content/uploads/2016/11/PNGPIX-COM-T-Shirt-Vector-PNG-Transparent-Image.png";
-        var price = product.Value("productPrice");
-        
-        <a href="@product.Url()"> 
-            <div class="v-container product-container">
-                <div class="product-img-container">
-                    <img class="product-img"
-                         src="@imageUrl"
-                         alt="featured product" />
+    <div class="grid-container">
+        @foreach (var product in content.Children)
+        {
+            var productName = product.Name;
+            var image = product.Value<IPublishedContent>("productImage");
+            var imageUrl = image != null ? image.Url() : "https://www.pngpix.com/wp-content/uploads/2016/11/PNGPIX-COM-T-Shirt-Vector-PNG-Transparent-Image.png";
+            var price = product.Value("productPrice");
+
+            <a href="@product.Url()">
+                <div class="v-container product-container">
+                    <div class="product-img-container">
+                        <img class="product-img"
+                             src="@imageUrl"
+                             alt="featured product" />
+                    </div>
+                    <div class="h-container justify-between">
+                        <h3>@productName</h3>
+                        <h3>@price SEK</h3>
+                    </div>
                 </div>
-                <div class="h-container justify-between">
-                    <h3>@productName</h3>
-                    <h3>@price SEK</h3>
-                </div>
-            </div>
-        </a>
-     }
+            </a>
+        }
+    </div>
 </div>
+
 

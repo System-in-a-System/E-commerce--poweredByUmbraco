@@ -1,21 +1,35 @@
-﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Cms.Core.Models
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
 
-@{ 
+@{
     var spotsContentEnumerable = Model.Value<IEnumerable<IPublishedElement>>("spots");
 }
 
 <div class="h-container">
     @foreach (var spotsContent in spotsContentEnumerable)
     {
-        var imageUrl = spotsContent.Value<IPublishedContent>("spotImage").Url();
+        var image = spotsContent.Value<IPublishedContent>("spotImage");
+        var imageUrl = image != null ? image.Url() : "https://emergeapp.net/wp-content/uploads/2018/12/freestocks-org-187367-unsplash.jpg";
 
-        <div class="v-container">
-            <a href="@spotsContent.Value("spotLink")">
-                <img class="mini-featured-img"
-                     src="@imageUrl"
-                     alt="featured product" />
-            </a>
-            <h2>@spotsContent.Value("spotHeading")</h2>
-        </div>
+
+        var links = Model.Root().Value<IEnumerable<Link>>("heroLink");
+        if (links.Any())
+        {
+
+            @foreach (var link in links)
+            {
+                <a href="@link.Url" target="@link.Target">
+                    <div class="v-container" style="position:relative; justify-content:center">
+
+                        <img class="mini-featured-img"
+                             src="@imageUrl"
+                             alt="featured product" />
+                        <h2 style="position:absolute;">@spotsContent.Value("spotHeading")</h2>
+
+                    </div>
+                </a>
+            }
+        }
     }
 </div>
