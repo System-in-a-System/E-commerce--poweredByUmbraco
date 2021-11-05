@@ -139,7 +139,6 @@ h2 {
 
 .mini-featured-img {
     width: 27vw;
-    opacity: 0.8;
 }
 
 .popular-products-section {
@@ -230,9 +229,14 @@ h2 {
     }
 
 
+/*----------------------------- Checkout Form ---------------------------*/
+.form-container {
+    background-color: white;
+}
 
 
-/*--------------------------- Bottom icons line ---------------------*/
+
+/*--------------------------- Bottom icons line ------------------------*/
 .icons-line {
     justify-content: space-evenly;
 }

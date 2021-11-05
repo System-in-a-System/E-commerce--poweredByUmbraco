@@ -1,9 +1,12 @@
 ﻿@using Umbraco.Cms.Web.Common.PublishedModels;
-@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.CheckOutPage>
+@using FreakyFashionPoweredByUmbraco.Models.ViewModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<CheckOutPageViewModel>
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
 @{
-	Layout = "Master.cshtml";
+    Layout = "Master.cshtml";
 }
 
 
-@await Umbraco.RenderMacroAsync("renderUmbracoForm", new {FormGuid="4591a465-c6d5-4a58-944b-add7ea7095c3", FormTheme="bootstrap3-horizontal", ExcludeScripts="0"})
+<div class="form-container">
+    @await Umbraco.RenderMacroAsync("renderUmbracoForm", new { FormGuid = "4591a465-c6d5-4a58-944b-add7ea7095c3", FormTheme = "bootstrap3-horizontal", ExcludeScripts = "0" })
+</div>
