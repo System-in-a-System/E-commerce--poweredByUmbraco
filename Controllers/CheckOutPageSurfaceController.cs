@@ -6,17 +6,34 @@ using System.Threading.Tasks;
 using Umbraco.Cms.Core.Cache;
 using Umbraco.Cms.Core.Logging;
 using Umbraco.Cms.Core.Routing;
+using Umbraco.Cms.Core.Scoping;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Web;
 using Umbraco.Cms.Infrastructure.Persistence;
 using Umbraco.Cms.Web.Website.Controllers;
+using static FreakyFashionPoweredByUmbraco.Migrations.AddCheckOutFormsTable;
 
 namespace FreakyFashionPoweredByUmbraco.Controllers
 {
     public class CheckOutPageSurfaceController : SurfaceController
     {
-        public CheckOutPageSurfaceController(IUmbracoContextAccessor umbracoContextAccessor, IUmbracoDatabaseFactory databaseFactory, ServiceContext services, AppCaches appCaches, IProfilingLogger profilingLogger, IPublishedUrlProvider publishedUrlProvider) : base(umbracoContextAccessor, databaseFactory, services, appCaches, profilingLogger, publishedUrlProvider)
+        private readonly IScopeProvider scopeProvider;
+        
+        public CheckOutPageSurfaceController(IUmbracoContextAccessor umbracoContextAccessor, 
+                                            IUmbracoDatabaseFactory databaseFactory, 
+                                            ServiceContext services, 
+                                            AppCaches appCaches, 
+                                            IProfilingLogger profilingLogger, 
+                                            IPublishedUrlProvider publishedUrlProvider,
+                                            IScopeProvider scopeProvider) 
+                                                : base(umbracoContextAccessor, 
+                                                      databaseFactory, 
+                                                      services, 
+                                                      appCaches, 
+                                                      profilingLogger, 
+                                                      publishedUrlProvider)
         {
+            this.scopeProvider = scopeProvider;
         }
 
         // /umbraco/surface/{Controller}/{Action method}
@@ -28,6 +45,21 @@ namespace FreakyFashionPoweredByUmbraco.Controllers
         [HttpPost]
         public IActionResult HandleSubmit(CheckOutInput input)
         {
+            using var scope = scopeProvider.CreateScope(autoComplete: true);
+            var database = scope.Database;
+
+            var checkOutForm = new CheckOutFormsSchema 
+            {
+                FirstName = input.FirstName,
+                LastName = input.LastName,
+                Email = input.Email,
+                Password = input.Password
+            };
+
+            database.Insert(checkOutForm);
+
+            scope.Complete();
+
             return Content("Thank you!");
         }
     }
