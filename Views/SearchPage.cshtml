@@ -20,7 +20,7 @@
         var searchResults = _publishedContentQuery.Search(searchQuery);
     }
 
-    <div class="search-results-count">@searchResults.Count() träffar på @searchQuery</div>
+    <div class="search-results-count">@searchResults.Count() träffar på "@searchQuery"</div>
 
 
     @foreach (var result in searchResults)
