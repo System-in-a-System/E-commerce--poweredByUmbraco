@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FreakyFashionPoweredByUmbraco.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,6 @@ using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Web;
 using Umbraco.Cms.Infrastructure.Persistence;
 using Umbraco.Cms.Web.Website.Controllers;
-using static FreakyFashionPoweredByUmbraco.Migrations.AddCheckOutFormsTable;
 
 namespace FreakyFashionPoweredByUmbraco.Controllers
 {
@@ -45,21 +45,6 @@ namespace FreakyFashionPoweredByUmbraco.Controllers
         [HttpPost]
         public IActionResult HandleSubmit(CheckOutInput input)
         {
-            using var scope = scopeProvider.CreateScope(autoComplete: true);
-            var database = scope.Database;
-
-            var checkOutForm = new CheckOutFormsSchema 
-            {
-                FirstName = input.FirstName,
-                LastName = input.LastName,
-                Email = input.Email,
-                Password = input.Password
-            };
-
-            database.Insert(checkOutForm);
-
-            scope.Complete();
-
             return Content("Thank you!");
         }
     }
